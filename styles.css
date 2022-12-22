@@ -1,0 +1,171 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.darkbg {
+    background-color: rgb(12, 12, 12);
+    color: grey;
+    transition: all 0.6s linear;
+}
+
+.lightbg {
+    background-color: grey;
+    color: #fff;
+    transition: all 0.6s linear;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 25px;
+    background: #000;
+}
+
+.header i {
+    cursor: pointer;
+}
+
+.header div {
+    display: flex;
+    align-items: center;
+}
+
+.header div ul {
+    display: flex;
+    list-style: none;
+    margin-left: 20px;
+}
+
+.header div ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 14px;
+    display: block;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 10px;
+}
+
+.header div ul li a:hover {
+    background: #ab003c;
+}
+
+.header div a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0px 18px;
+    display: block;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 10px;
+}
+
+.player {
+    background: #000;
+    position: fixed;
+    width: 80%;
+    height: 60px;
+    top: calc(100% - 80px);
+    display: flex;
+    align-items: center;
+    margin-left: 10%;
+    justify-content: space-evenly;
+    box-shadow:1px 1px 10px #000;
+
+}
+
+.player img {
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.song-info {
+    display: flex;
+    width: 250px;
+}
+
+.player-setting {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 200px;
+}
+
+.song-info label {
+    display: block;
+}
+
+.song {
+    color: rgb(202, 202, 202);
+    font-size: 12px;
+}
+
+.singer,
+.time {
+    color: rgb(117, 117, 117);
+    font-size: 12px;
+}
+
+.song-details {
+    padding: 5px 0px 0px 10px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 50%;
+    
+}
+
+.player i {
+    cursor: pointer;
+    
+}
+
+#playBtn {
+    background-color: #ab003c;
+    height: 45px;
+    width: 45px;
+    text-align: center;
+    line-height: 45px;
+    font-size: 25px;
+    border-radius: 50%;
+}
+
+.progress {
+    width: 80%;
+    height: 4px;
+    background: #fff;
+    position: fixed;
+    top: calc(100% - 84px);
+    border-radius: 20px;
+    margin-left: 10%;
+    cursor: pointer;
+    box-shadow: -2px -2px 8px grey;
+}
+
+.running {
+    position: absolute;
+    width: 0%;
+    height: 100%;
+    background: red;
+    border-radius: 20px;
+    box-shadow: -2px -2px 8px red;
+}
+
+#image {
+    width: 300px;
+    position: relative;
+    height: 300px;
+    object-fit: cover;
+    margin: 100px 0px 0px 50px;
+    border-radius: 5px;
+}
+

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<audio id="music" src="music/Dhokha_Arjeet_Singh.mp3"></audio>
+
+<body class="lightbg">
+    <div class="header">
+        <div>
+            <h2>Music Player</h2>
+            <ul>
+                <li><a href="">Home</a></li>
+                <li><a href="">Services</a></li>
+                <li><a href="">Product</a></li>
+            </ul>
+        </div>
+        <div>
+            <i class="fa fa-moon-o" id="theme" aria-hidden="true"></i>
+            <a href="logout.php">Login / Sign Up</a>
+        </div>
+    </div>
+<div class="flex-box">
+
+<div class="songs-box">
+    <h3>Pyar Karte Ho Na</h3>
+    <img id="image" src="img/Dhokha_Arjit_singh.jpg" alt="">    
+
+</div>
+   
+</div>
+
+
+
+
+
+    <div class="progress">
+        <div class="running">
+
+        </div>
+    </div>
+    <div class="player">
+        <div class="song-info">
+            <img id="poster" src="img/Dhokha_Arjit_singh.jpg" alt="">
+            <div class="song-details">
+                <label id="title" class="song">Dhokha</label>
+                <label id="singer" class="singer">Arjeet Singh</label>
+            </div>
+        </div>
+        <div class="buttons">
+            <i class="fa fa-volume-up"> </i>
+            <i class="fa fa-backward" id="prev"></i>
+            <i class="fa fa-play" id="playBtn"></i>
+            <i class="fa fa-forward" id="next"></i>
+            <i class="fa fa-random"></i>
+        </div>
+        <div class="player-setting">
+            <label class="time"><span class="current">00:00</span>/<span class="duration">04:50</span></label>
+            <i class="fa fa-list"></i>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    function RemoveAnimation() {
+        let body = document.querySelector("body");
+        let loading = document.querySelector(".loading");
+        let loading_gif = document.querySelector(".loading");
+        loading.classList.remove("loading");
+        loading_gif.style.display = "none";
+
+    }
+//Songs Object Array
+const songs = [{
+        name: "Dhokha",
+        artist: "Arjit Singh",
+        source: "music/Dhokha_Arjeet_Singh.mp3",
+        poster: "img/Dhokha_Arjit_singh.jpg"
+    },
+    {
+        name: "Pyar Karte Ho Na",
+        artist: "Stebin B, Shreya G",
+        source: "music/Pyar_Karte_Ho_Na.mp3",
+        poster: "img/Pyar_Karte_Ho_Na.jpg"
+    }
+];
+//Codes for Changing Theme
+let isLight = true;
+const body = document.querySelector("body");
+const theme = document.querySelector("#theme");
+
+function bodyStyleDark() {
+    body.classList.replace("lightbg", "darkbg");
+    theme.classList.replace("fa-moon-o", "fa-sun-o");
+}
+
+function bodyStyleLight() {
+    body.classList.replace("darkbg", "lightbg");
+    theme.classList.replace("fa-sun-o", "fa-moon-o");
+}
+
+function changeTheme() {
+    isLight ? bodyStyleDark() : bodyStyleLight();
+    isLight ? isLight = false : isLight = true;
+}
+theme.addEventListener("click", changeTheme);
+//Variables For Element Selector
+const music = document.querySelector("#music");
+const playBtn = document.querySelector("#playBtn");
+const prev = document.querySelector("#prev");
+const next = document.querySelector("#next");
+const poster = document.querySelector("#poster");
+const title = document.querySelector("#title");
+const singer = document.querySelector("#singer");
+let progress = document.querySelector(".running");
+let progress_main = document.querySelector(".progress");
+const current = document.querySelector(".current");
+let total = document.querySelector(".duration");
+const image = document.querySelector("#image");
+let isSongPlaying = false;
+let currentSong = 0;
+//Function For Playing Song
+function PlaySong() {
+    music.play();
+    playBtn.classList.replace("fa-play", "fa-pause");
+    isSongPlaying = true;
+}
+//Function For Pause Song
+function PauseSong() {
+    music.pause();
+    playBtn.classList.replace("fa-pause", "fa-play");
+    isSongPlaying = false;
+
+}
+//Function For Load Song Data
+function LoadSong(SongIndex) {
+    currentSong = SongIndex;
+    music.src = songs[currentSong].source;
+    title.textContent = songs[currentSong].name;
+    singer.textContent = songs[currentSong].artist;
+    poster.src = songs[currentSong].poster;
+    image.src = songs[currentSong].poster;
+    PlaySong();
+}
+//Function For Next Song
+function NextSong() {
+    var index = (currentSong + 1) % songs.length;
+    LoadSong(index);
+}
+//Function For Previous Song
+function PrevSong() {
+    var index = (currentSong - 1) % songs.length;
+    LoadSong(index);
+}
+//Event For Previous Song
+playBtn.addEventListener("click", () => {
+    isSongPlaying ? PauseSong() : PlaySong();
+});
+//Event For Next Click
+next.addEventListener("click", NextSong);
+//Event For Prevoius Click
+prev.addEventListener("click", PrevSong);
+//Event For After Song Ended Click
+music.addEventListener("ended", NextSong);
+//Event For After Song Ended Click
+music.addEventListener("timeupdate", (event) => {
+    //Getting Current Time and Duration From event
+    const { currentTime, duration } = event.srcElement;
+    //Getting Progress Time From Total Duration
+    let progress_time = (currentTime / duration) * 100;
+    //Setting Width of Progress Bar
+    progress.style.width = `${progress_time}%`;
+    //Getting Seprated Min and Sec From Total Duration
+    let min = Math.floor(duration / 60);
+    let sec = Math.floor(duration % 60);
+    //Adding 0 in Sec if Sec Less Than 10
+    if (sec < 10) {
+        sec = `${sec}0`;
+    }
+    //Storing Total Duration in MIN:SEC Format
+    let total_duration = `${min}:${sec}`;
+    if (duration) {
+        //Chaging Duration of Song 
+        total.textContent = `${total_duration}`;
+    }
+    //Getting Current time in min and Sec
+    let min_currentTime = Math.floor(currentTime / 60);
+    let sec_currentTime = Math.floor(currentTime % 60);
+    //Adding 0 in Sec if Sec Less Than 10
+    if (sec_currentTime < 10) {
+        sec_currentTime = `0${sec_currentTime}`;
+    }
+    //Storing current time in MIN:SEC Format
+    let song_currentTime = `${min_currentTime}:${sec_currentTime}`;
+    //updating Current Duration of Song 
+    current.textContent = `${song_currentTime}`;
+});
+//Event For Song Forward
+progress_main.addEventListener("click", (event) => {
+    const { currentTime, duration } = music;
+    let move_progress_bar =
+        (event.offsetX / event.srcElement.clientWidth) * duration;
+    music.currentTime = move_progress_bar;
+});
+document.addEventListener("keyup", (event)=>{
+if(event.code=="Space"){
+isSongPlaying ? PauseSong() : PlaySong();
+}
+// ArrowRight
+// ArrowLeft
+
+if(event.code=='ArrowRight')
+{
+NextSong();   
+}
+if(event.code=='ArrowLeft')
+{
+    PrevSong();   
+}
+
+
+ })  ;
+</script>
